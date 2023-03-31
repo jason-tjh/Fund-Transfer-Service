@@ -8,6 +8,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name="credit")
@@ -16,11 +18,18 @@ public class Credit {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int transaction_id;
+	@NotNull
 	private int from_account;
+	@NotNull
 	private int to_account;
+	@NotNull
+	@Min(value = 0, message = "The minimum credit amount should be more than 0.")
 	private double amount;
+	@NotNull
 	private String credit_status;
+	@NotNull
 	private LocalTime transaction_timestamp;
+	@NotNull
 	private LocalDate record_date_timestamp;
 	
 	public int getTransaction_id() {

@@ -8,6 +8,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="debit")
@@ -16,11 +19,19 @@ public class Debit {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int transaction_id;
+	@NotNull
 	private int from_account;
+	@NotNull
 	private int to_account;
+	@NotNull
+	@Min(value = 0, message = "The minimum debit amount should be more than 0.")
 	private double amount;
+	@NotNull
+	@Size(max = 50)
 	private String debit_status;
+	@NotNull
 	private LocalTime transaction_timestamp;
+	@NotNull
 	private LocalDate record_date_timestamp;
 	
 	public int getTransaction_id() {
