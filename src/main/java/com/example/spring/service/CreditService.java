@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.spring.exception.NegativeAmountException;
 import com.example.spring.model.Credit;
 import com.example.spring.repository.CreditRepository;
 
@@ -25,6 +26,10 @@ public class CreditService {
 	}
 
 	public Credit insertNewCreditRecord(int accountFrom, int accountTo, double amount, String status) {
+		
+		if (amount < 0) {
+			throw new NegativeAmountException("400", "Amount cannot be negative.");
+		}
 		Credit newCredit = new Credit();
 		newCredit.setFrom_account(accountFrom);
 		newCredit.setTo_account(accountTo);

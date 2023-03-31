@@ -1,13 +1,13 @@
 package com.example.spring.exception;
 
-public class EmptyInputException extends RuntimeException{
+public class OverdraftException extends RuntimeException{
 
 	private String errorCode;
 	private String errorMessage;
-
+	
 	// TODO: Log errors
 	
-	public EmptyInputException(String errorCode, String errorMessage) {
+	public OverdraftException(String errorCode, String errorMessage) {
 		super();
 		this.errorCode = errorCode;
 		this.errorMessage = errorMessage;
@@ -25,5 +25,4 @@ public class EmptyInputException extends RuntimeException{
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
 	}
-	
 }

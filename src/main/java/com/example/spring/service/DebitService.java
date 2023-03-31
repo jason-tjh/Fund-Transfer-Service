@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.spring.exception.NegativeAmountException;
 import com.example.spring.model.Debit;
 import com.example.spring.repository.DebitRepository;
 
@@ -25,6 +26,10 @@ public class DebitService {
 	}
 	
 	public Debit insertNewDebitRecord(int accountFrom, int accountTo, double amount, String status) {
+		
+		if (amount < 0) {
+			throw new NegativeAmountException("400", "Amount cannot be negative.");
+		}
 		Debit newDebit = new Debit();
 		newDebit.setFrom_account(accountFrom);
 		newDebit.setTo_account(accountTo);

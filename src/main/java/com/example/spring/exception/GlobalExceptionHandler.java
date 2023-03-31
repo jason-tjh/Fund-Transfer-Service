@@ -17,13 +17,17 @@ public class GlobalExceptionHandler {
 	// TODO: Log errors
 
 	@ExceptionHandler(NegativeAmountException.class)
-	public ResponseEntity<String> handleNegativeAmount(NegativeAmountException negativeAmountException){
+	public ResponseEntity<String> handleNegativeAmount(NegativeAmountException negativeAmountException) {
 		return new ResponseEntity<String>(negativeAmountException.getErrorMessage(), HttpStatus.BAD_REQUEST);
 	}
 	
 	@ExceptionHandler(NoRecordFoundException.class)
-	public ResponseEntity<String> handleNoRecordFoundException(NoRecordFoundException noRecordFoundException){
+	public ResponseEntity<String> handleNoRecordFoundException(NoRecordFoundException noRecordFoundException) {
 		return new ResponseEntity<String>(noRecordFoundException.getErrorMessage(), HttpStatus.BAD_REQUEST);
 	}
-	
+
+	@ExceptionHandler(OverdraftException.class)
+	public ResponseEntity<String> handleOverdraftException(OverdraftException overdraftException) {
+		return new ResponseEntity<String>(overdraftException.getErrorMessage(), HttpStatus.BAD_REQUEST);
+	}
 }
