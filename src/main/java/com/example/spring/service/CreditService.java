@@ -23,10 +23,6 @@ public class CreditService {
 	public Credit getCreditByID(int id) {
 		return creditRepository.findById(id).get();
 	}
-	
-//	public Credit insertNewCreditRecord(Credit credit) {
-//		return creditRepository.save(credit);
-//	}
 
 	public Credit insertNewCreditRecord(int accountFrom, int accountTo, double amount, String status) {
 		Credit newCredit = new Credit();

@@ -24,10 +24,6 @@ public class DebitService {
 		return debitRepository.findById(id).get();
 	}
 	
-//	public Debit insertNewDebitRecord(Debit debit) {
-//		return debitRepository.save(debit);
-//	}
-	
 	public Debit insertNewDebitRecord(int accountFrom, int accountTo, double amount, String status) {
 		Debit newDebit = new Debit();
 		newDebit.setFrom_account(accountFrom);
