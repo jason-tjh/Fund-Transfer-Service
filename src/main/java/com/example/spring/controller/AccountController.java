@@ -38,11 +38,6 @@ public class AccountController {
 		return accountService.checkLimitByID(id);
 	}
 	
-	@PutMapping("/updateAccount/")
-	public Account updateAccount(@RequestBody Account account) {
-		return accountService.updateAccount(account);
-	}
-	
 	@PutMapping("/updateAccount/{id}")
 	public Account updateAccountBalanceByID(@RequestBody Account account, @PathVariable("id") int id) {
 		Account existingAccount = accountService.getAccountByID(id);

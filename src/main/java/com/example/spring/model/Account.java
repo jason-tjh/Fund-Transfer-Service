@@ -33,7 +33,7 @@ public class Account {
 	@NotNull
 	private Date date_created;
 	
-	public long getAccount_id() {
+	public int getAccount_id() {
 		return account_id;
 	}
 	public void setAccount_id(int account_id) {
