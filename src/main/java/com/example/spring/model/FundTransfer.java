@@ -1,8 +1,16 @@
 package com.example.spring.model;
+
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+
 public class FundTransfer {
-	
+
+	@NotNull
 	private int from_account;
+	@NotNull
 	private int to_account;
+	@NotNull
+	@Min(value = 0, message = "The minimum transfer amount should be more than 0.")
 	private double transfer_amount;
 	
 	public int getFrom_account() {

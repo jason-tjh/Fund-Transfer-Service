@@ -7,6 +7,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="account")
@@ -15,13 +18,22 @@ public class Account {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int account_id;
+	@NotNull
+	@Size(max = 100)
 	private String first_name;
+	@NotNull
+	@Size(max = 100)
 	private String last_name;
+	@NotNull
+	@Min(value = 0, message = "The minimum account balance should be 0.")
 	private double balance;
+	@NotNull
+	@Min(value = 0, message = "The minimum account limit should not be negative.")
 	private double account_limit;
+	@NotNull
 	private Date date_created;
 	
-	public long getAccount_id() {
+	public int getAccount_id() {
 		return account_id;
 	}
 	public void setAccount_id(int account_id) {

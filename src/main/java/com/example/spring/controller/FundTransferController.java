@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.spring.exception.OverdraftException;
 import com.example.spring.model.Account;
 import com.example.spring.model.FundTransfer;
 import com.example.spring.service.AccountService;
@@ -35,25 +36,41 @@ public class FundTransferController {
 		double debitAccountBalance = accountService.checkBalanceByID(debitAccountID);
 		double accountLimit = accountService.checkLimitByID(debitAccountID);
 
-		// TODO: Add validation
-		if (transferAmount < 0 ||
-				transferAmount > debitAccountBalance ||
-				transferAmount > accountLimit) {
-			System.out.println("Error: " + transferAmount + " | " + debitAccountBalance + " | " + accountLimit);
+		if (transferAmount > debitAccountBalance || transferAmount > accountLimit) {
+			throw new OverdraftException("400", "Transaction cannot be completed, please try again.");
 		}
 		
-		debitService.insertNewDebitRecord(debitAccountID, creditAccountID, transferAmount, "PENDING");
+		insertNewRecord("debit", debitAccountID, creditAccountID, transferAmount, "PENDING");
+		double newDebitBalance = debitAccountBalance - transferAmount;
+		updateBalanceAfterTransfer(debitAccountID, newDebitBalance);
 		
-		// TODO: Add delay?
-		
-		creditService.insertNewCreditRecord(debitAccountID, creditAccountID, transferAmount, "RECEIVED");
 		double creditAccountBalance = accountService.checkBalanceByID(creditAccountID);
 		double newCreditBalance = creditAccountBalance + transferAmount;
-		accountService.updateBalanceAfterTransfer(creditAccountID, newCreditBalance);
+		updateBalanceAfterTransfer(creditAccountID, newCreditBalance);
 
-		double newDebitBalance = debitAccountBalance - transferAmount;
-		accountService.updateBalanceAfterTransfer(debitAccountID, newDebitBalance);
+		insertNewRecord("credit", debitAccountID, creditAccountID, transferAmount, "RECEIVED");
+		insertNewRecord("debit", debitAccountID, creditAccountID, transferAmount, "SUCCESS");
 		
-		return new ResponseEntity<>("ACCEPTED", HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(
+				String.format("The amount $%.2f has been transferred successfully.", transferAmount),
+				HttpStatus.OK);
+	}
+	
+	
+	private void updateBalanceAfterTransfer(int targetAccount, double newBalance) {
+		accountService.updateBalanceAfterTransfer(targetAccount, newBalance);
+	}
+	
+	private void insertNewRecord(String type, int debitID,
+			int creditID,double transferAmount, String status) {
+		if (type.equalsIgnoreCase("debit")) {
+			debitService.insertNewDebitRecord(debitID, creditID, transferAmount, status);
+		}
+		else if (type.equalsIgnoreCase("credit")) {
+			creditService.insertNewCreditRecord(debitID, creditID, transferAmount, status);
+		}
+		else {
+			return;
+		}
 	}
 }

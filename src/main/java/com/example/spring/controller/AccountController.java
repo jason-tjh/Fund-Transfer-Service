@@ -28,9 +28,14 @@ public class AccountController {
 		return accountService.getAccountByID(id);
 	}
 	
-	@PutMapping("/updateAccount/")
-	public Account updateAccount(@RequestBody Account account) {
-		return accountService.updateAccount(account);
+	@GetMapping("/accountBalance/{id}")
+	public double checkBalanceByID(@PathVariable("id") int id) {
+		return accountService.checkBalanceByID(id);
+	}
+	
+	@GetMapping("/accountLimit/{id}")
+	public double checkLimitByID(@PathVariable("id") int id) {
+		return accountService.checkLimitByID(id);
 	}
 	
 	@PutMapping("/updateAccount/{id}")

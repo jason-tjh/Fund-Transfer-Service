@@ -30,17 +30,9 @@ public class DebitController {
 		return debitService.getDebitByID(id);
 	}
 	
-//	@PostMapping("/insertDebit/")
-//	public String insertNewDebitRecord(@RequestBody Debit debit) {
-//		Debit newDebit = new Debit();
-//		newDebit.setFrom_account(debit.getFrom_account());
-//		newDebit.setTo_account(debit.getTo_account());
-//		newDebit.setAmount(debit.getAmount());
-//		newDebit.setDebit_status(debit.getDebit_status());
-//		newDebit.setTransaction_timestamp(LocalTime.now());
-//		newDebit.setRecord_date_timestamp(LocalDate.now());
-//		
-//		debitService.insertNewDebitRecord(newDebit);
-//		return "New debit record created";
-//	}
+	@PostMapping("/insertDebit/")
+	public Debit insertNewDebitRecord(@RequestBody Debit debit) {		
+		return debitService.insertNewDebitRecord(debit.getFrom_account(), debit.getTo_account(),
+						debit.getAmount(), debit.getDebit_status());
+	}
 }

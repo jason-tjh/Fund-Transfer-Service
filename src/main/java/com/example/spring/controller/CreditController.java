@@ -30,17 +30,9 @@ public class CreditController {
 		return creditService.getCreditByID(id);
 	}
 	
-//	@PostMapping("/insertCredit/")
-//	public String insertNewCreditRecord(@RequestBody Credit credit) {
-//		Credit newCredit = new Credit();
-//		newCredit.setFrom_account(credit.getFrom_account());
-//		newCredit.setTo_account(credit.getTo_account());
-//		newCredit.setAmount(credit.getAmount());
-//		newCredit.setCredit_status(credit.getCredit_status());
-//		newCredit.setTransaction_timestamp(LocalTime.now());
-//		newCredit.setRecord_date_timestamp(LocalDate.now());
-//		
-//		creditService.insertNewCreditRecord(newCredit);
-//		return "New credit record created";
-//	}
+	@PostMapping("/insertCredit/")
+	public Credit insertNewCreditRecord(@RequestBody Credit credit) {	
+		return creditService.insertNewCreditRecord(credit.getFrom_account(), credit.getTo_account(),
+				credit.getAmount(), credit.getCredit_status());
+	}
 }
