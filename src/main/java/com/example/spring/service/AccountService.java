@@ -2,9 +2,12 @@ package com.example.spring.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.spring.controller.FundTransferController;
 import com.example.spring.exception.NegativeAmountException;
 import com.example.spring.exception.NoRecordFoundException;
 import com.example.spring.model.Account;
@@ -13,10 +16,11 @@ import com.example.spring.repository.AccountRepository;
 @Service
 public class AccountService {
 
-	
 	@Autowired
 	AccountRepository accountRepository;
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger(FundTransferController.class);
+		
 	public List<Account> getAllAccounts() {
 		return accountRepository.findAll();
 	}
@@ -45,6 +49,7 @@ public class AccountService {
 	public Account updateBalanceAfterTransfer(int id, double balanceAfterTransfer) {
 		Account existingAccount = getAccountByID(id);
 		existingAccount.setBalance(balanceAfterTransfer);
+		LOGGER.info(String.format("New balance updated for Account %d: $%.2f", id, balanceAfterTransfer));
 		
 		return accountRepository.save(existingAccount);
 	}
