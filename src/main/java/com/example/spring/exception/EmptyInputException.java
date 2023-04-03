@@ -4,8 +4,6 @@ public class EmptyInputException extends RuntimeException{
 
 	private String errorCode;
 	private String errorMessage;
-
-	// TODO: Log errors
 	
 	public EmptyInputException(String errorCode, String errorMessage) {
 		super();

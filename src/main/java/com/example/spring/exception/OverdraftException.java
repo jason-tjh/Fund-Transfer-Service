@@ -4,9 +4,7 @@ public class OverdraftException extends RuntimeException{
 
 	private String errorCode;
 	private String errorMessage;
-	
-	// TODO: Log errors
-	
+		
 	public OverdraftException(String errorCode, String errorMessage) {
 		super();
 		this.errorCode = errorCode;

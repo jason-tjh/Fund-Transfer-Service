@@ -5,8 +5,6 @@ public class NegativeAmountException extends RuntimeException{
 	private String errorCode;
 	private String errorMessage;
 	
-	// TODO: Log errors
-	
 	public NegativeAmountException(String errorCode, String errorMessage) {
 		super();
 		this.errorCode = errorCode;
