@@ -17,10 +17,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @Order(1)
 public class SecurityConfig {
 
-	@Value("X-API-Key")
+	@Value("${app.http.auth-token-header-name}")
 	private String principalRequestHeader;
 
-	@Value("123")
+	@Value("${app.http.auth-token}")
 	private String principalRequestValue;
 
 	@Bean
